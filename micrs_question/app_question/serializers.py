@@ -1,8 +1,41 @@
 from rest_framework import serializers
 
-class QuestionSerializer(serializers.Serializer):
-    question_id = models.IntegerField(primary_key=True)
-    title = models.CharField(max_length=128)
-    text = models.CharField(max_length=1024)
-    pub_date = models.DateField(auto_now_add=True)
-    user_id = models.IntegerField()
+from .models import Question, Answer, VoteQuestion, VoteAnswer
+
+class QuestionWithVotesSerializer(serializers.ModelSerializer):
+    votes = serializers.IntegerField()
+
+    class Meta:
+        model = Question
+        fields = ('question_id','title','text','pub_date','user_id', 'votes')
+
+class QuestionSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Question
+        fields = ('question_id','title', 'text', 'pub_date','user_id')
+
+class AnswerWithVotesSerializer(serializers.ModelSerializer):
+    votes = serializers.IntegerField()
+
+    class Meta:
+        model = Answer
+        fields = ('answer_id', 'text', 'marked', 'pub_date', 'user_id', 'votes')
+
+class AnswerSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Answer
+        fields = ('answer_id', 'text', 'marked', 'pub_date', 'user_id')
+
+class VoteQuestionSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = VoteQuestion
+        fields = ('user_id', 'vote', 'question')
+
+class VoteAnswerSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = VoteAnswer
+        fields = ('user_id', 'vote', 'answer')
