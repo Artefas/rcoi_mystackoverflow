@@ -61,5 +61,12 @@ class VoteAnswer(models.Model):
     answer      = models.ForeignKey('Answer', on_delete=models.CASCADE)
     pub_date    = models.DateField(auto_now=True,auto_now_add=True)
 
+class ModeratorTable(models.Model):
+    question_id = models.ForeignKey(Question, on_delete=models.CASCADE)
+    user_id     = models.IntegerField()
+
+
+
+
 
 

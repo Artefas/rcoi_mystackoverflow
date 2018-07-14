@@ -4,7 +4,8 @@ from .views import QuestionCreateView,QuestionDetailView
 from .views import QuestionWithVotesDetailView, QuestionWithVotesListView
 from .views import AnswerCreateView, AnswerDetailView
 from .views import AnswerWithVotesDetailView, AnswerWithVotesListByQuestionIdView
-from .views import V
+from .views import VoteQuestionCreateView, VoteAnswerCreateView
+from .views import
 
 urlpatterns = [
     path('questions',                   QuestionWithVotesListView.as_view(), name='questions-with-votes-list'),
@@ -15,5 +16,6 @@ urlpatterns = [
     path('answer',                      AnswerCreateView.as_view(), name='answer-create'),
     path('answer/<int:answer_id>',      AnswerDetailView.as_view(), name='answer-detail'),
     path('questions/<int:question_id>/vote', ),
-    path('answer/<int:answer_id>/vote', )
+    path('answer/<int:answer_id>/vote', ),
+    path('question/<int:question>/comments', )
 ]

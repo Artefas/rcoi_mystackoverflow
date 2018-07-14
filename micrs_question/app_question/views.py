@@ -5,10 +5,11 @@ from rest_framework.pagination import PageNumberPagination
 
 from django.db.models import Count
 
-from .models import Question, Answer, VoteQuestion, VoteAnswer
+from .models import Question, Answer, VoteQuestion, VoteAnswer, CommentQuestion, CommentAnswer
 from .serializers import QuestionSerializer, QuestionWithVotesSerializer
 from .serializers import AnswerSerializer, AnswerWithVotesSerializer
 from .serializers import VoteQuestionSerializer, VoteAnswerSerializer
+from .serializers import CommentQuestionSerializer, CommentAnswerSerializer
 
 # вопросы
 class QuestionWithVotesListView(generics.ListAPIView):
@@ -40,17 +41,13 @@ class AnswerWithVotesListByQuestionIdView(generics.ListAPIView):
         answers = Answer.objects.filter(question__question_id = question_id).annotate(votes=Count('voteanswer'))
         return answers
 
-
 class AnswerWithVotesDetailView(generics.RetrieveAPIView):
     queryset = Answer.objects.annotate(votes=Count('voteanswer'))
     serializer_class = AnswerWithVotesSerializer
 
-
 class AnswerCreateView(generics.CreateAPIView):
     queryset = Answer.objects.all()
     serializer_class = AnswerSerializer
-    pagination_class = PageNumberPagination
-
 
 class AnswerDetailView(generics.UpdateDestroyAPIView):
     queryset = Answer.objects.all()
@@ -61,18 +58,28 @@ class VoteQuestionCreateView(generics.CreateAPIView):
     queryset = VoteQuestion.objects.all()
     serializer_class = VoteQuestionSerializer
 
-class VoteQuestionUpdateView(generics.UpdateAPIView):
-    queryset = VoteQuestion.object.all()
-    serializer_class = VoteQuestionSerializer
-
 # голоса за ответы
 class VoteAnswerCreateView(generics.CreateAPIView):
     queryset = VoteAnswer.objects.all()
     serializer_class = VoteAnswerSerializer
 
-class VoteAnswerUpdateView(generics.UpdateAPIView):
-    queryset = VoteAnswer.objects.all()
-    serializer_class = VoteAnswerSerializer
+# Комментарии  вопроса
+class CommentQuestionCreateListView(generics.ListCreateAPIView):
+    serializer_class = CommentQuestionSerializer
+
+    def get_queryset(self):
+        question_id = self.kwargs["question_id"]
+        comments = CommentQuestion.objects.filter(question__question_id=question_id)
+        return comments
+
+# Комментарии ответа
+class CommentQuestionCreateListView(generics.ListCreateAPIView):
+    serializer_class = CommentQuestionSerializer
+
+    def get_queryset(self):
+        answer_id = self.kwargs["answer_id"]
+        comments = CommentAnswer.objects.filter(answer__answer_id=answer_id)
+        return comments
 
 
 
