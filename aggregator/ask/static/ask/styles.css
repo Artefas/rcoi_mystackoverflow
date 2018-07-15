@@ -2,18 +2,16 @@
 
 html, body {
     background-color: white;
-    padding-top: 15px;
-    margin: 0;
+    padding-top: 30px;
 }
 
 .custom-navbar {
     border-top: 3px solid orange ;
     background-color: #fafafb;
+    box-shadow: 0px 1px 0px rgba(12,13,14,0.1), 0px 1px 6px rgba(59,64,69,0.1);
     margin: 0;
     padding: 0;
-    box-shadow: 0px 1px 0px rgba(12,13,14,0.1), 0px 1px 6px rgba(59,64,69,0.1);
 }
-
 
 .navbar-brand {
   padding: 0px;
@@ -35,7 +33,7 @@ html, body {
     color: #535a60;
 }
 
-.nav-link:hover,.nav-link:focus{
+.nav-link:hover{
     background-color: #eff0f1;
     color: black;
 }
@@ -47,23 +45,32 @@ html, body {
     margin-right: 5px;
     padding-top: 5px;
     padding-bottom: 5px;
-    background-color: inherit;
+    background-color: transparent;
     border: 0px;
     color: #3af;
 }
 
 .login-link.btn.btn-primary:focus,.login-link.btn.btn-primary:hover{
     background-color: rgba(0, 119, 204, 0.05);
+    color: #07c
 }
 .singup-link.btn.btn-primary{
     margin-top: 10px;
     margin-bottom: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
     padding-top: 5px;
     padding-bottom: 5px;
-    background-color: #07c;
+    background-color: #3af;
     border: 0px;
 }
 
 .singup-link.btn.btn-primary:hover{
     background-color: #07c;
+}
+
+.avatar {
+    height: 25px;
+    width: 25px;
+    border-radius: 3px;
 }

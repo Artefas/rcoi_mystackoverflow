@@ -1,9 +1,27 @@
 {% extends "ask/index.html" %}
+{% load static %}
+
+{% block link-stylesheet %}
+    <link rel="stylesheet" href="{% static 'ask/questions.css' %}">
+{% endblock %}
 
 {% block title %}
     Вопросы
 {% endblock %}
 
 {% block content %}
-    <h1 class="h1">hello</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="subheader">
+                    <h1>Вопросы</h1>
+                    <div class="tabs">
+                        <a href="#">Горячие</a>
+                        <a href="#">Новые</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
 {% endblock %}
