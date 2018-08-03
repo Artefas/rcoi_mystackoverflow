@@ -1,0 +1,43 @@
+{% extends "ask/index.html" %}
+{% load static %}
+
+{% block link-stylesheet %}
+    <link rel="stylesheet" href="{% static 'ask/ask.css' %}">
+{% endblock %}
+
+{% block title %}
+    Задать вопрос
+{% endblock %}
+
+{% block navbar %}
+    <li><a href="{% url 'main-view' %}">Вопросы</a></li>
+    <li><a href="{% url 'tags-view' %}">Метки</a></li>
+    <li><a href="#">Участники</a></li>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="page-header">
+                    <h2>Задать вопрос</h2>
+                </div>
+                <form class="form-ask" action="">
+                    <div class="form-group">
+                        <label for="question-title">Заголовок</label>
+                        <input type="text" class="form-control" id="question-title" placeholder="В чем заключается ваш вопрос? Будьте конкретны.">
+                    </div>
+                    <div class="form-group">
+                        <label for="question-description">Основная часть</label>
+                        <textarea class="form-control" id="question-description" row="15"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="tags">Метки</label>
+                        <input type="text" class="form-control" id="tags" placeholder="введите не менее одной метки и не более 5, например, массивы jquery алгоритм">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Отправить вопрос</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

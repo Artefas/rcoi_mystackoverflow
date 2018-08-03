@@ -1,0 +1,27 @@
+.signup-block {
+    border: 1px solid lightgrey;
+    border-radius: 0px;
+    padding: 15px;
+}
+
+.btn-google {
+    color: grey;
+    background-color: white;
+    border: 1px solid lightgrey;
+}
+
+.btn-google > img {
+    height: 20px;
+    width: 20px;
+}
+
+.or {
+    margin: 20px 0;
+    font-size: 14px;
+    color:darkgrey;
+    text-align: center;
+}
+
+.form-signup input {
+    border-radius: 5px;
+}

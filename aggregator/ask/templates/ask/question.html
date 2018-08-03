@@ -1,0 +1,151 @@
+{% extends "ask/index.html" %}
+{% load static %}
+
+{% block link-stylesheet %}
+    <link rel="stylesheet" href="{% static 'ask/question.css' %}">
+{% endblock %}
+
+{% block title %}
+    Вопрос
+{% endblock %}
+
+{% block navbar %}
+    <li><a href="{% url 'main-view' %}">Вопросы</a></li>
+    <li><a href="{% url 'tags-view' %}">Метки</a></li>
+    <li><a href="#">Участники</a></li>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="page-header">
+                <div class="row">
+                    <div class="col-md-10">
+                        <h2>Laravel mix не сохраняет css-файл</h2>
+                    </div>
+                    <div class="col-md-2">
+                        <a href="{% url 'ask-view' %}" class="btn btn-primary pull-right">Задать вопрос</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="vote">
+                    <a href="#" class=""><span class="glyphicon glyphicon-triangle-top"></span></a>
+                    <p>20</p>
+                    <a href="#" class=""><span class="glyphicon glyphicon-triangle-bottom"></span></a>
+                </div>
+            </div>
+            <div class="col-md-11">
+                <div class="question">
+                    <p>Существует таблица
+                        CREATE TABLE `user_histories` (
+                        `id` int(10) UNSIGNED NOT NULL,
+                        `user` int(10) UNSIGNED NOT NULL,
+                        `item` int(10) NOT NULL,
+                        `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+                        )
+
+                        INSERT INTO `user_histories` (`id`, `user`, `item`, `created_at`) VALUES
+                        (25, 1, 5807, '2018-06-16 11:52:49'),
+                        (26, 1, 8415, '2018-06-16 11:58:30'),
+                        (27, 1, 7219, '2018-06-16 12:33:50'),
+                        (28, 1, 1518, '2018-06-17 07:31:24'),
+                        (29, 1, 9089, '2018-06-17 07:41:53'),
+                        (30, 1, 3454, '2018-07-13 14:41:55'),
+                        (31, 1, 5595, '2018-07-13 15:19:36'),
+                        (32, 1, 7611, '2018-07-13 15:21:27'),
+                        (33, 2, 1518, '2018-07-20 16:19:29'),
+                        ... (10 строк)
+                        (40, 2, 7960, '2018-07-20 16:20:11'),
+                        (41, 3, 5609, '2018-07-20 16:20:15'),
+                        (42, 3, 8705, '2018-07-20 16:20:20'),
+                        (43, 3, 1737, '2018-07-20 16:22:56'),
+                        (44, 3, 7260, '2018-07-20 16:23:09');
+                        в которой хранятся история просмотренных пользователем страниц.
+                        Как при помощи одного запроса удалить записи (историю посещений), оставив для каждого пользователя только последних 5(по времени)?
+                        Учитывая что mysql не поддерживает limit в подзапросах и не позволяет использовать offset в операторе DELETE
+                    </p>
+                </div>
+                <div class="question-footer">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <ul class="tags list-inline">
+                                <li><a href="#">django</a></li>
+                                <li><a href="#">django</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="user-info">
+                                <span class="time-info">задан 56 минут назад</span>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <img class="user-avatar" src="{% static 'ask/images/default-avatar.png' %}">
+                                    </div>
+                                    <div class="col-md-9">
+                                        <a href="#">Alexandr Pashkevich</a>
+                                        <br>
+                                        <span>1000</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="subheader">
+                <div class="col-md-8">
+                    <h1>Ответы</h1>
+                </div>
+                <div class="col-md-4">
+                    <ul class="nav nav-pills nav-justified">
+                        <li role="presentation" class="active"><a href="#">Новые</a></li>
+                        <li role="presentation"><a href="#">Горячие</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="vote">
+                    <a href="#" class=""><span class="glyphicon glyphicon-triangle-top"></span></a>
+                    <p>20</p>
+                    <a href="#" class=""><span class="glyphicon glyphicon-triangle-bottom"></span></a>
+                    <p><span class="glyphicon glyphicon-ok"></span></p>
+                </div>
+            </div>
+            <div class="col-md-11">
+                <div class="question">
+                    <p>Существует таблица
+                        CREATE TABLE `user_histories` (
+                        `id` int(10) UNSIGNED NOT NULL,
+                        `user` int(10) UNSIGNED NOT NULL,
+                        `item` int(10) NOT NULL,
+                        `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+                        )
+
+                        INSERT INTO `user_histories` (`id`, `user`, `item`, `created_at`) VALUES
+                        (25, 1, 5807, '2018-06-16 11:52:49'),
+                        (26, 1, 8415, '2018-06-16 11:58:30'),
+                        (27, 1, 7219, '2018-06-16 12:33:50'),
+                        (28, 1, 1518, '2018-06-17 07:31:24'),
+                        (29, 1, 9089, '2018-06-17 07:41:53'),
+                        (30, 1, 3454, '2018-07-13 14:41:55'),
+                        (31, 1, 5595, '2018-07-13 15:19:36'),
+                        (32, 1, 7611, '2018-07-13 15:21:27'),
+                        (33, 2, 1518, '2018-07-20 16:19:29'),
+                        ... (10 строк)
+                        (40, 2, 7960, '2018-07-20 16:20:11'),
+                        (41, 3, 5609, '2018-07-20 16:20:15'),
+                        (42, 3, 8705, '2018-07-20 16:20:20'),
+                        (43, 3, 1737, '2018-07-20 16:22:56'),
+                        (44, 3, 7260, '2018-07-20 16:23:09');
+                        в которой хранятся история просмотренных пользователем страниц.
+                        Как при помощи одного запроса удалить записи (историю посещений), оставив для каждого пользователя только последних 5(по времени)?
+                        Учитывая что mysql не поддерживает limit в подзапросах и не позволяет использовать offset в операторе DELETE
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "ask/index.html" %}
+{% load static %}
+
+{% block link-stylesheet %}
+    <link rel="stylesheet" href="{% static 'ask/login.css' %}">
+{% endblock %}
+
+{% block title %}
+    Вход
+{% endblock %}
+
+{% block navbar %}
+    <li><a href="{% url 'main-view' %}">Вопросы</a></li>
+    <li><a href="{% url 'tags-view' %}">Метки</a></li>
+    <li><a href="#">Участники</a></li>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="signup-block">
+                    <a class="btn btn-block btn-google" href="#">
+                        <img src="{% static 'ask/images/google-favicon.png' %}" class=icon">
+                        <span>Google</span>
+                    </a>
+                    <div class="or">или</div>
+                    <form class="form-login" action="">
+                        <div class="form-group">
+                            <label for="email">Почта:</label>
+                            <input type="email" class="form-control" id="email" placeholder="example@mail.ru">
+                        </div>
+                        <div class="form-group">
+                            <label for="pwd">Пароль:</label>
+                            <input type="password" class="form-control" id="pwd" placeholder="*******">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Войти</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

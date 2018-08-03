@@ -4,6 +4,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="stylesheet" href="{% static "ask/bootstrap-3.3.7/css/bootstrap.css" %}">
     <link rel="stylesheet" href="{% static "ask/styles.css" %}">
     {% block link-stylesheet %}{% endblock %}
@@ -27,9 +28,8 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="navbar">
                     <ul class="nav navbar-nav navbar-left">
-                        <li class="active"><a class="nav-link" href="#">Вопросы</a></li>
-                        <li><a class="nav-link" href="#">Метки</a></li>
-                        <li><a class="nav-link" href="#">Участники</a></li>
+                        {%  block navbar %}
+                        {% endblock %}
                         <li><form class="navbar-form">
                             <div class="input-group">
                                 <input type="text" class="form-control" placeholder="Поиск...">
@@ -39,13 +39,14 @@
                                     </button>
                                 </div>
                             </div>
-                        </form></li>
+                            </form>
+                        </li>
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">
                         {% if not user %}
-                            <li><a class="login-link btn btn-primary" href="#">Войти</a></li>
-                            <li><a class="singup-link btn btn-primary" href="#">Регистрация</a></li>
+                            <li><a class="btn btn-primary login-link " href="{% url 'login-view' %}">Войти</a></li>
+                            <li><a class="btn btn-primary singup-link" href="{% url 'signup-view' %}">Регистрация</a></li>
                         {% else %}
                             <li>
                                 <a class="nav-link" href="#">

@@ -5,7 +5,7 @@ html, body {
     padding-top: 30px;
 }
 
-.custom-navbar {
+.navbar.custom-navbar {
     border-top: 3px solid orange ;
     background-color: #fafafb;
     box-shadow: 0px 1px 0px rgba(12,13,14,0.1), 0px 1px 6px rgba(59,64,69,0.1);
@@ -22,23 +22,25 @@ html, body {
   width: auto;
 }
 
-.active {
+.custom-navbar li.active a {
     border-bottom: 2px solid orange;
-}
-.active>a{
     color: black;
 }
 
-.nav-link {
+.nav > li > a {
+    padding: 14px 10px;
     color: #535a60;
 }
 
-.nav-link:hover{
+.nav > li > a:hover {
+    padding: 14px 10px;
     background-color: #eff0f1;
     color: black;
 }
 
-.login-link.btn.btn-primary{
+
+
+a.login-link.btn.btn-primary{
     margin-top: 10px;
     margin-bottom: 10px;
     margin-left: 5px;
@@ -63,10 +65,12 @@ html, body {
     padding-bottom: 5px;
     background-color: #3af;
     border: 0px;
+    color: white;
 }
 
 .singup-link.btn.btn-primary:hover{
     background-color: #07c;
+    colo: white;
 }
 
 .avatar {

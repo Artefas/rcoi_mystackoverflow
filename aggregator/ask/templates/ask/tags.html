@@ -1,0 +1,230 @@
+{% extends "ask/index.html" %}
+{% load static %}
+
+{% block link-stylesheet %}
+    <link rel="stylesheet" href="{% static 'ask/tags.css' %}">
+{% endblock %}
+
+{% block title %}
+    Метки
+{% endblock %}
+
+{% block navbar %}
+    <li><a href="{% url 'main-view' %}">Вопросы</a></li>
+    <li class="active"><a href="{% url 'tags-view' %}">Метки</a></li>
+    <li><a href="#">Участники</a></li>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="subheader">
+                <div class="col-md-8">
+                    <h1>Метки</h1>
+                </div>
+                <div class="col-md-4">
+                    <ul class="nav nav-pills nav-justified">
+                        <li role="presentation" class="active"><a href="#">Популярные</a></li>
+                        <li role="presentation"><a href="#">Имя</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="page-description">
+            <p>Метка — это ключевое слово, позволяющее отнести ваш вопрос в одну категорию с другими
+                похожими вопросами. Благодаря подбору
+                правильных меток другие участники смогут проще найти ваш вопрос и быстрее дать на него ответ.
+            </p>
+            <form class="navbar-form">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Поиск...">
+                    <div class="input-group-btn">
+                        <button class="btn btn-default" type="submit">
+                            <i class="glyphicon glyphicon-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="tag-block">
+                    <div class="tag">
+                        <a href="#">Django</a>
+                        <span> x 123</span>
+                    </div>
+                    <div class="tag-block-description">
+                    Django — свободно распространяемый фреймворк
+                        для построения веб-приложений с помощью языка
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="tag-block">
+                    <div class="tag">
+                        <a href="#">Django</a>
+                        <span> x 123</span>
+                    </div>
+                    <div class="tag-block-description">
+                    Django — свободно распространяемый фреймворк
+                        для построения веб-приложений с помощью языка
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="tag-block">
+                    <div class="tag">
+                        <a href="#">Django</a>
+                        <span> x 123</span>
+                    </div>
+                    <div class="tag-block-description">
+                    Django — свободно распространяемый фреймворк
+                        для построения веб-приложений с помощью языка
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="tag-block">
+                    <div class="tag">
+                        <a href="#">Django</a>
+                        <span> x 123</span>
+                    </div>
+                    <div class="tag-block-description">
+                    Django — свободно распространяемый фреймворк
+                        для построения веб-приложений с помощью языка
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="tag-block">
+                    <div class="tag">
+                        <a href="#">Django</a>
+                        <span> x 123</span>
+                    </div>
+                    <div class="tag-block-description">
+                    Django — свободно распространяемый фреймворк
+                        для построения веб-приложений с помощью языка
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="tag-block">
+                    <div class="tag">
+                        <a href="#">Django</a>
+                        <span> x 123</span>
+                    </div>
+                    <div class="tag-block-description">
+                    Django — свободно распространяемый фреймворк
+                        для построения веб-приложений с помощью языка
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="tag-block">
+                    <div class="tag">
+                        <a href="#">Django</a>
+                        <span> x 123</span>
+                    </div>
+                    <div class="tag-block-description">
+                    Django — свободно распространяемый фреймворк
+                        для построения веб-приложений с помощью языка
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="tag-block">
+                    <div class="tag">
+                        <a href="#">Django</a>
+                        <span> x 123</span>
+                    </div>
+                    <div class="tag-block-description">
+                    Django — свободно распространяемый фреймворк
+                        для построения веб-приложений с помощью языка
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="tag-block">
+                    <div class="tag">
+                        <a href="#">Django</a>
+                        <span> x 123</span>
+                    </div>
+                    <div class="tag-block-description">
+                    Django — свободно распространяемый фреймворк
+                        для построения веб-приложений с помощью языка
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="tag-block">
+                    <div class="tag">
+                        <a href="#">Django</a>
+                        <span> x 123</span>
+                    </div>
+                    <div class="tag-block-description">
+                    Django — свободно распространяемый фреймворк
+                        для построения веб-приложений с помощью языка
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="tag-block">
+                    <div class="tag">
+                        <a href="#">Django</a>
+                        <span> x 123</span>
+                    </div>
+                    <div class="tag-block-description">
+                    Django — свободно распространяемый фреймворк
+                        для построения веб-приложений с помощью языка
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="tag-block">
+                    <div class="tag">
+                        <a href="#">Django</a>
+                        <span> x 123</span>
+                    </div>
+                    <div class="tag-block-description">
+                    Django — свободно распространяемый фреймворк
+                        для построения веб-приложений с помощью языка
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="tag-block">
+                    <div class="tag">
+                        <a href="#">Django</a>
+                        <span> x 123</span>
+                    </div>
+                    <div class="tag-block-description">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <ul class="pagination my-pagination">
+            <li><a href="#">Назад</a></li>
+            <li><a href="#">1</a></li>
+            <li class="active"><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><span>...</span></li>
+            <li><a href="#">5</a></li>
+            <li><a href="#">Далее</a></li>
+        </ul>
+    </div>
+
+
+{% endblock %}

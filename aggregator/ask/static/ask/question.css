@@ -1,0 +1,59 @@
+.page-header {
+    margin-top: 20px;
+}
+
+
+.vote {
+    font-size:25px;
+}
+.vote a {
+    color: darkgrey;
+    text-decoration: none;
+}
+
+.tags.list-inline > li {
+    margin-left: 5px;
+    background-color: #e1ecf4;
+    color: #39739d;
+    padding: 5px;
+    font-size: 12px;
+}
+
+.tags.list-inline > li:hover {
+    background-color: #cee0ed;
+    color:#33658a;
+}
+
+.tags.list-inline > li a {
+    color:inherit;
+    text-decoration: none;
+}
+
+img.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 2px;
+}
+
+
+.subheader {
+    height: 50px;
+    border-bottom: 1px solid #e4e6e8;
+    padding: 0;
+    margin-top: 20px;
+}
+
+.subheader h1 {
+    font-size: 24px;
+    margin: 10px 10px 10px 0;
+}
+
+.subheader .nav.nav-pills li a {
+    margin: 0px;
+    padding: 10px;
+    border-radius: 0;
+}
+
+.subheader .nav.nav-pills li.active a{
+    background-color: #63c625;
+}
