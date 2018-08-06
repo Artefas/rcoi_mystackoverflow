@@ -1,8 +1,11 @@
 from django.urls import path
 
-from .views import ProfileDetail, ProfileList
+from .views import ProfileListCreateAPIView, ProfileDetailAPIView, ProfileUpdateAPIView
+# from .view import
 
 urlpatterns = [
-    path('profile/<int:pk>', ProfileDetail.as_view(), name='profile-detail'),
-    path('profile', ProfileList.as_view(), name='profile-list'),
+    path('profile', ProfileListCreateAPIView.as_view(), name='profile-list-create'),
+    path('profile/<int:pk>', ProfileDetailAPIView.as_view(), name='profile-detail'),
+    path('profile/<int:pk>/edit', ProfileUpdateAPIView.as_view(), name='profile-detail'),
+    # path('login', )
 ]
