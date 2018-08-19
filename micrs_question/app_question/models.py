@@ -1,69 +1,87 @@
 from django.db import models
+from django.core.exceptions import ObjectDoesNotExist
 
-# Create your models here.
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.fields import GenericRelation
+from django.contrib.contenttypes.models import ContentType
+
+class LikeManager(models.Manager):
+    def like(self, object_id):
+        try:
+            obj = self.get_queryset().get(id=object_id)
+            obj.votes += 1
+            obj.save(update_fields=["votes",])
+            return obj
+        except ObjectDoesNotExist:
+            return None
+
+    def unlike(self, object_id):
+        try:
+            obj = self.get_queryset().get(id=object_id)
+            obj.votes -= 1
+            obj.save(update_fields=["votes",])
+            return obj
+        except ObjectDoesNotExist:
+            return None
+
+class AnswerManager(models.Manager):
+    def mark(self, answer_id):
+        try:
+            answer = self.get_queryset().get(id=answer_id)
+            answer.marked  = True
+            answer.save(update_fields=["marked",])
+            return answer
+        except ObjectDoesNotExist:
+            return None
+
+    def unmark(self, answer_id):
+        try:
+            answer = self.get_queryset().get(id=answer_id)
+            answer.marked  = False
+            answer.save(update_fields=["marked",])
+            return answer
+        except ObjectDoesNotExist:
+            return None
 
 class Question(models.Model):
-    question_id = models.IntegerField(primary_key=True)
     title       = models.CharField(max_length=128)
     text        = models.CharField(max_length=1024)
     pub_date    = models.DateField(auto_now_add=True)
     user_id     = models.IntegerField()
+    votes       = models.IntegerField(default=0)
+    comments    = GenericRelation('Comment')
+    tags        = models.ManyToManyField('Tag')
+
+    objects = models.Manager()
+    likes = LikeManager()
 
 class Answer(models.Model):
-    answer_id   = models.IntegerField(primary_key=True)
-    question    = models.ForeignKey('Question', on_delete=models.CASCADE)
+    question    = models.ForeignKey('Question', related_name='answers', on_delete=models.CASCADE)
     text        = models.CharField(max_length=1024)
     marked      = models.BooleanField(default=False)
     pub_date    = models.DateField(auto_now_add=True)
     user_id     = models.IntegerField()
+    votes       = models.IntegerField(default=0,blank=True)
+    comments    = GenericRelation('Comment')
 
-class CommentQuestion(models.Model):
-    comment_id  = models.AutoField(primary_key=True)
-    question    = models.ForeignKey('Question', on_delete=models.CASCADE)
+    likes = LikeManager()
+    objects = AnswerManager()
+
+class Comment(models.Model):
+    id  = models.AutoField(primary_key=True)
     user_id     = models.IntegerField()
     text        = models.CharField(max_length=128)
     pub_date    = models.DateField(auto_now_add=True)
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    content_object = GenericForeignKey('content_type', 'object_id')
 
-class CommentAnswer(models.Model):
-    comment_id  = models.AutoField(primary_key=True)
-    answer      = models.ForeignKey('Answer', on_delete=models.CASCADE)
-    user_id     = models.IntegerField()
-    text        = models.CharField(max_length=128)
-    pub_date    = models.DateField(auto_now_add=True)
+class Tag(models.Model):
+    name = models.CharField(max_length=16)
+    description = models.CharField(max_length=128, blank=True,default="")
 
-class VoteQuestion(models.Model):
-    LIKE = 1
-    DISLIKE = -1
-
-    VOTES = (
-        (DISLIKE,"Не нравится"),
-        (LIKE, "Нравится")
-    )
-
-    vote_id     = models.AutoField(primary_key=True)
-    user_id     = models.IntegerField()
-    vote        = models.SmallIntegerField(verbose_name="Голос", choices=VOTES)
-    question    = models.ForeignKey('Question', on_delete=models.CASCADE)
-    pub_date    = models.DateField(auto_now=True,auto_now_add=True)
-
-class VoteAnswer(models.Model):
-    LIKE = 1
-    DISLIKE = -1
-
-    VOTES = (
-        (DISLIKE,"Не нравится"),
-        (LIKE, "Нравится")
-    )
-
-    vote_id     = models.AutoField(primary_key=True)
-    user_id     = models.IntegerField()
-    vote        = models.SmallIntegerField(verbose_name="Голос", choices=VOTES)
-    answer      = models.ForeignKey('Answer', on_delete=models.CASCADE)
-    pub_date    = models.DateField(auto_now=True,auto_now_add=True)
-
-class ModeratorTable(models.Model):
-    question_id = models.ForeignKey(Question, on_delete=models.CASCADE)
-    user_id     = models.IntegerField()
+    def __str__(self):
+        return self.name
 
 
 

@@ -1,53 +1,62 @@
 from rest_framework import serializers
+from django.core.exceptions import ObjectDoesNotExist
 
-from .models import Question, Answer, VoteQuestion, VoteAnswer, CommentQuestion, CommentAnswer
+from .models import Question, Answer, Comment, Tag
+from .servises import get_comments
 
-class QuestionWithVotesSerializer(serializers.ModelSerializer):
-    votes = serializers.IntegerField()
+
+class CommentSerializerMixin(serializers.Serializer):
+    comments = serializers.SerializerMethodField()
+
+    def get_comments(self, obj):
+        comments = get_comments(obj)
+        return comments
+
+class TagSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Question
-        fields = ('question_id','title','text','pub_date','user_id', 'votes')
+        model = Tag
+        fields = '__all__'
+
+    def create(self, validated_data):
+        try:
+            tag = Tag.objects.get(name = validated_data["name"])
+        except ObjectDoesNotExist:
+            tag = Tag.objects.create(**validated_data)
+        return tag
 
 class QuestionSerializer(serializers.ModelSerializer):
+    tags = TagSerializer(many=True)
 
     class Meta:
         model = Question
-        fields = ('question_id','title', 'text', 'pub_date','user_id')
+        fields = ('id','title','text','pub_date','user_id', 'votes', 'tags')
 
-class AnswerWithVotesSerializer(serializers.ModelSerializer):
-    votes = serializers.IntegerField()
+    def create(self, validated_data):
+        tags = validated_data.pop('tags')
+        question = Question.objects.create(**validated_data)
+
+        for tag in tags:
+            tag, created = Tag.objects.get_or_create(name=tag["name"])
+            question.tags.add(tag)
+        return question
+
+class AnswerSerializer(serializers.ModelSerializer, CommentSerializerMixin):
 
     class Meta:
         model = Answer
-        fields = ('answer_id', 'text', 'marked', 'pub_date', 'user_id', 'votes')
+        fields = ('id', 'text', 'marked', 'pub_date', 'user_id', 'votes', 'comments')
 
-class AnswerSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Answer
-        fields = ('answer_id', 'text', 'marked', 'pub_date', 'user_id')
-
-class VoteQuestionSerializer(serializers.ModelSerializer):
+class QuestionDetailSerializer(serializers.ModelSerializer, CommentSerializerMixin):
+    answers = AnswerSerializer(many=True, read_only=True)
+    tags = TagSerializer(many=True, read_only=True)
 
     class Meta:
-        model = VoteQuestion
-        fields = ('user_id', 'vote', 'question')
+        model = Question
+        fields = ('id','title', 'text', 'pub_date','user_id','answers','comments', 'tags')
 
-class VoteAnswerSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = VoteAnswer
-        fields = ('user_id', 'vote', 'answer')
-
-class CommentQuestionSerializer(serializers.ModelSerializer):
+class CommentSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = CommentQuestion
-        fields = ('comment_id', 'question', 'user_id', 'text', 'pub_date')
-
-class CommentAnswerSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = CommentAnswer
-        fields = ('comment_id', 'question', 'user_id', 'text', 'pub_date')
+        model = Comment
+        fields = '__all__'

@@ -1,85 +1,134 @@
-from django.shortcuts import render
+from django.http import HttpResponse
+from django.views.decorators.http import require_http_methods
 
 from rest_framework import generics
 from rest_framework.pagination import PageNumberPagination
 
-from django.db.models import Count
+from .models import Question, Answer, Comment, Tag
+from .serializers import QuestionDetailSerializer, QuestionSerializer
+from .serializers import AnswerSerializer
+from .serializers import CommentSerializer
+from .serializers import TagSerializer
 
-from .models import Question, Answer, VoteQuestion, VoteAnswer, CommentQuestion, CommentAnswer
-from .serializers import QuestionSerializer, QuestionWithVotesSerializer
-from .serializers import AnswerSerializer, AnswerWithVotesSerializer
-from .serializers import VoteQuestionSerializer, VoteAnswerSerializer
-from .serializers import CommentQuestionSerializer, CommentAnswerSerializer
-
-# вопросы
-class QuestionWithVotesListView(generics.ListAPIView):
-    queryset = Question.objects.annotate(votes = Count('votequestion'))
-    serializer_class = QuestionWithVotesSerializer
-    pagination_class = PageNumberPagination
-
-class QuestionWithVotesDetailView(generics.RetrieveAPIView):
-    queryset = Question.objects.annotate(votes=Count('votequestion'))
-    serializer_class = QuestionWithVotesSerializer
-    lookup_field = 'question_id'
-
-class QuestionCreateView(generics.CreateAPIView):
+# # вопросы
+class QuestionListCreateAPIView(generics.ListCreateAPIView):
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
 
-class QuestionDetailView(generics.UpdateDestroyAPIView):
+class QuestionDetailAPIView(generics.RetrieveAPIView):
     queryset = Question.objects.all()
+    serializer_class = QuestionDetailSerializer
+
+# # ответы
+class AnswerCreateAPIView(generics.CreateAPIView):
+    serializer_class = AnswerSerializer
+    queryset = Answer.objects.all()
+
+class CommentCreateAPIView(generics.CreateAPIView):
+    serializer_class = CommentSerializer
+    queryset = Comment.objects.all()
+
+class TagListAPIView(generics.ListAPIView):
+    serializer_class = TagSerializer
+
+    def get_queryset(self):
+        tags = Tag.objects.all()
+        query_params = self.request.query_params.dict()
+        for param in query_params:
+            if param == "name":
+                value = query_params["name"]
+                if not isinstance(value, list):
+                    tags = tags.filter(name__contains=value)
+        return tags
+
+class QuestionListByTagAPIView(generics.ListAPIView):
     serializer_class = QuestionSerializer
-    lookup_field = 'question_id'
-
-# ответы
-class AnswerWithVotesListByQuestionIdView(generics.ListAPIView):
-    serializer_class = AnswerWithVotesSerializer
-    pagination_class = PageNumberPagination
 
     def get_queryset(self):
-        question_id = self.kwargs["question_id"]
-        answers = Answer.objects.filter(question__question_id = question_id).annotate(votes=Count('voteanswer'))
-        return answers
+        name = self.kwargs["name"]
+        return Question.objects.filter(tags__name=name)
 
-class AnswerWithVotesDetailView(generics.RetrieveAPIView):
-    queryset = Answer.objects.annotate(votes=Count('voteanswer'))
-    serializer_class = AnswerWithVotesSerializer
+@require_http_methods(["PATCH",])
+def like_question(request, pk):
+    question = Question.likes.like(object_id=pk)
+    if question is None:
+        return HttpResponse(
+            content_type='application/json',
+            status=404
+        )
+    return HttpResponse(
+        content_type='application/json',
+        status=200
+    )
 
-class AnswerCreateView(generics.CreateAPIView):
-    queryset = Answer.objects.all()
-    serializer_class = AnswerSerializer
+@require_http_methods(["PATCH",])
+def unlike_question(request, pk):
+    question = Question.likes.unlike(object_id=pk)
+    if question is None:
+        return HttpResponse(
+            content_type='application/json',
+            status=404
+        )
+    return HttpResponse(
+        content_type='application/json',
+        status=200
+    )
 
-class AnswerDetailView(generics.UpdateDestroyAPIView):
-    queryset = Answer.objects.all()
-    serializer_class = AnswerSerializer
+@require_http_methods(["PATCH",])
+def like_answer(request, pk):
+    answer = Answer.likes.like(object_id=pk)
+    if answer is None:
+        return HttpResponse(
+            content_type='application/json',
+            status=404
+        )
+    return HttpResponse(
+        content_type='application/json',
+        status=200
+    )
 
-# голоса за вопросы
-class VoteQuestionCreateView(generics.CreateAPIView):
-    queryset = VoteQuestion.objects.all()
-    serializer_class = VoteQuestionSerializer
+@require_http_methods(["PATCH",])
+def unlike_answer(request, pk):
+    answer = Answer.likes.unlike(object_id=pk)
+    if answer is None:
+        return HttpResponse(
+            content_type='application/json',
+            status=404
+        )
+    return HttpResponse(
+        content_type='application/json',
+        status=200
+    )
 
-# голоса за ответы
-class VoteAnswerCreateView(generics.CreateAPIView):
-    queryset = VoteAnswer.objects.all()
-    serializer_class = VoteAnswerSerializer
+@require_http_methods(["PATCH",])
+def mark_answer(request, pk):
+    answer = Answer.objects.mark(object_id=pk)
+    if answer is None:
+        return HttpResponse(
+            content_type='application/json',
+            status=404
+        )
+    return HttpResponse(
+        content_type='application/json',
+        status=200
+    )
 
-# Комментарии  вопроса
-class CommentQuestionCreateListView(generics.ListCreateAPIView):
-    serializer_class = CommentQuestionSerializer
+@require_http_methods(["PATCH",])
+def unmark_answer(request, pk):
+    answer = Answer.objects.unmark(object_id=pk)
+    if answer is None:
+        return HttpResponse(
+            content_type='application/json',
+            status=404
+        )
+    return HttpResponse(
+        content_type='application/json',
+        status=200
+    )
 
-    def get_queryset(self):
-        question_id = self.kwargs["question_id"]
-        comments = CommentQuestion.objects.filter(question__question_id=question_id)
-        return comments
 
-# Комментарии ответа
-class CommentQuestionCreateListView(generics.ListCreateAPIView):
-    serializer_class = CommentQuestionSerializer
 
-    def get_queryset(self):
-        answer_id = self.kwargs["answer_id"]
-        comments = CommentAnswer.objects.filter(answer__answer_id=answer_id)
-        return comments
+
 
 
 
